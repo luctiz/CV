@@ -22,9 +22,14 @@ jobs:
           root_file: main.tex
           latexmk_use_pdflatex: true
 
+      - name: Prepare deploy folder
+        run: |
+          mkdir _site
+          cp main.pdf _site/main.pdf
+          echo '<html><head><meta http-equiv="refresh" content="0;url=main.pdf"></head><body><a href="main.pdf">CV</a></body></html>' > _site/index.html
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
-          include_files: main.pdf
+          publish_dir: ./_site

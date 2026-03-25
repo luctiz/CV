@@ -1,14 +1,17 @@
-name: Build and Release CV
+name: Build and Deploy CV
 
 on:
   push:
     branches: [master]
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -19,16 +22,9 @@ jobs:
           root_file: main.tex
           latexmk_use_pdflatex: true
 
-      - name: Upload PDF as artifact
-        uses: actions/upload-artifact@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          name: cv
-          path: main.pdf
-
-      - name: Release PDF
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: latest
-          name: Latest CV
-          files: main.pdf
-          body: Auto-generated from the latest commit.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          include_files: main.pdf

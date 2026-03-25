@@ -1,0 +1,19 @@
+.vs
+
+# LaTeX output files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.pdf
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
